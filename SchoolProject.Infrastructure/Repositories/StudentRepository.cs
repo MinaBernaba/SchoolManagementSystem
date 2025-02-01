@@ -12,10 +12,9 @@ namespace SchoolProject.Infrastructure.Repositories
 {
     public class StudentRepository(ApplicationDbContext context) : IStudentRepository
     {
-        
-        public async Task<List<Student>> GetAllAsync() => await context.Students.ToListAsync();
 
-        public async Task<Student> GetByIdAsync(int id) => await context.Students.FindAsync(id);
+        public async Task<List<Student>> GetAllAsync() => await context.Students.Include(x => x.Department).ToListAsync();
+        public async Task<Student> GetByIdAsync(int id) => await context.Students.Include(x=> x.Department).SingleOrDefaultAsync( x => x.StudentId == id);
         
 
     }
