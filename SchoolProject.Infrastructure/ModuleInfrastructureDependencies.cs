@@ -16,6 +16,7 @@ namespace SchoolProject.Infrastructure
         public static IServiceCollection AddInfrastructureDependencies(this IServiceCollection services)
         {
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
             return services;
         }
     }

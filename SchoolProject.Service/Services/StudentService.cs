@@ -13,7 +13,7 @@ namespace SchoolProject.Service.Services
 {
     internal class StudentService(IStudentRepository studentRepository) : IStudentService
     {
-        public async Task<List<Student>> GetAllStudentsAsync() => await studentRepository.GetAllAsync();
+        public async Task<IEnumerable<Student>> GetAllStudentsAsync() => await studentRepository.GetAllStudentsAsync();
 
         public async Task<Student> GetStudentByIdAsync(int id) => await studentRepository.GetByIdAsync(id);
     }

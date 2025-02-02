@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace SchoolProject.Infrastructure.Interfaces
 {
-    public interface IStudentRepository
+    public interface IStudentRepository : IGenericRepositoryAsync<Student>
     {
-        Task<Student> GetByIdAsync (int id);
-        Task<List<Student>> GetAllAsync();
+        Task<IEnumerable<Student>> GetAllStudentsAsync();
     }
 }

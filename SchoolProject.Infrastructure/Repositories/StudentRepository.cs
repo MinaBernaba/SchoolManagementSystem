@@ -10,12 +10,14 @@ using System.Threading.Tasks;
 
 namespace SchoolProject.Infrastructure.Repositories
 {
-    public class StudentRepository(ApplicationDbContext context) : IStudentRepository
+    public class StudentRepository : GenericRepositoryAsync<Student>, IStudentRepository
     {
-
-        public async Task<List<Student>> GetAllAsync() => await context.Students.Include(x => x.Department).ToListAsync();
-        public async Task<Student> GetByIdAsync(int id) => await context.Students.Include(x=> x.Department).SingleOrDefaultAsync( x => x.StudentId == id);
-        
-
+        public StudentRepository(ApplicationDbContext context) : base(context)
+        {
+            _context = context;
+        }
+        private readonly ApplicationDbContext _context;
+        public async Task<IEnumerable<Student>> GetAllStudentsAsync() =>await _context.Set<Student>().AsNoTracking().Include(x => x.Department).ToListAsync();
+        public override async Task<Student> GetByIdAsync(int id) => await _context.Set<Student>().Include(x=> x.Department).SingleOrDefaultAsync( x => x.StudentId == id);
     }
 }
