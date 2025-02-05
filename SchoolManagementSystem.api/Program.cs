@@ -1,9 +1,10 @@
 #region usings
 using Microsoft.EntityFrameworkCore;
-using SchoolProject.Infrastructure.Data;
-using SchoolProject.Infrastructure;
-using SchoolProject.Service;
 using SchoolProject.Core;
+using SchoolProject.Core.MiddleWare;
+using SchoolProject.Infrastructure;
+using SchoolProject.Infrastructure.Data;
+using SchoolProject.Service;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,14 +31,16 @@ builder.Services.AddInfrastructureDependencies()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+#region Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+#endregion
 
+app.UseMiddleware<ErrorHandlerMiddleware>();
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();

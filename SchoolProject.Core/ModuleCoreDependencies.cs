@@ -1,11 +1,8 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using SchoolProject.Core.Behaviors;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SchoolProject.Core
 {
@@ -18,6 +15,10 @@ namespace SchoolProject.Core
 
             // Configration for AutoMapper
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            // Configration for Fluent validation 
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             return services;
         }
     }
