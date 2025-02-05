@@ -13,6 +13,7 @@ namespace SchoolProject.Core.Mapping.StudentMapper
     {
         public StudentProfile()
         {
+            AddStudentMapper();
             GetAllStudentsMapper();
         }
     }

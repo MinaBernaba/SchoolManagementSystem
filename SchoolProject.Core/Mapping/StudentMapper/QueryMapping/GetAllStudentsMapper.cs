@@ -8,7 +8,7 @@ namespace SchoolProject.Core.Mapping.StudentMapper
     {
         public void GetAllStudentsMapper()
         {
-            CreateMap<Student, GetAllStudentsResponse>()
+            CreateMap<Student, GetStudentMainInfoResponse>()
                .ForMember(dest => dest.DepartmentName, source => source.MapFrom(source => source.Department.Name));
 
         }

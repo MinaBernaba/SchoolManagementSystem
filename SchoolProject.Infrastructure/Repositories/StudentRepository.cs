@@ -12,12 +12,13 @@ namespace SchoolProject.Infrastructure.Repositories
 {
     public class StudentRepository : GenericRepositoryAsync<Student>, IStudentRepository
     {
+        #region ctor And Field
+        private readonly ApplicationDbContext _context;
         public StudentRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
-        private readonly ApplicationDbContext _context;
-        public async Task<IEnumerable<Student>> GetAllStudentsAsync() =>await _context.Set<Student>().AsNoTracking().Include(x => x.Department).ToListAsync();
-        public override async Task<Student> GetByIdAsync(int id) => await _context.Set<Student>().Include(x=> x.Department).SingleOrDefaultAsync( x => x.StudentId == id);
+        #endregion
+        public async Task<List<Student>> GetAllStudentsAsync() => await _context.Set<Student>().AsNoTracking().Include(x => x.Department).ToListAsync();
     }
 }

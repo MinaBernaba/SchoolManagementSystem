@@ -9,7 +9,8 @@ namespace SchoolProject.Service.Interfaces
 {
     public interface IStudentService
     {
-        Task<IEnumerable<Student>> GetAllStudentsAsync();
+        Task<List<Student>> GetAllStudentsAsync();
         Task<Student> GetStudentByIdAsync(int id);
+        Task<string> AddAsync(Student student);
     }
 }

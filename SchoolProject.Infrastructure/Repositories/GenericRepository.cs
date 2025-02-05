@@ -14,9 +14,9 @@ namespace SchoolProject.Infrastructure.Repositories
 {
     public class GenericRepositoryAsync<T>(ApplicationDbContext context) : IGenericRepositoryAsync<T> where T : class
     {
-        #region Crud
-        public virtual IQueryable<T> GetAllNoTrackingAsync() => context.Set<T>().AsNoTracking().AsQueryable();
-        public virtual IQueryable<T> GetAllAsTrackingAsync() => context.Set<T>().AsQueryable();
+        #region CRUD
+        public virtual IQueryable<T> GetAllNoTracking() => context.Set<T>().AsNoTracking().AsQueryable();
+        public virtual IQueryable<T> GetAllAsTracking() => context.Set<T>().AsQueryable();
         public virtual async Task<T> GetByIdAsync(int id) => await context.Set<T>().FindAsync(id);
         public virtual async Task<T> AddAsync(T entity)
         {
@@ -50,7 +50,7 @@ namespace SchoolProject.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
         #endregion
-        #region special Methods
+        #region Special Methods
         public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate) => await context.Set<T>().Where(predicate).ToListAsync();
         public virtual async Task<IEnumerable<T>> GetPagedAsync(int pageNumber, int pageSize) => await context.Set<T>().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         #endregion
@@ -61,7 +61,6 @@ namespace SchoolProject.Infrastructure.Repositories
             if (context.Database.CurrentTransaction != null)
                 await context.Database.CommitTransactionAsync();
         }
-
         public async Task RollBackAsync()
         {
             if (context.Database.CurrentTransaction != null)
