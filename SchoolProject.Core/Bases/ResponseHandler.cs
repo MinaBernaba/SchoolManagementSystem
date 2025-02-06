@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace SchoolProject.Core.Bases
 {
@@ -29,6 +24,16 @@ namespace SchoolProject.Core.Bases
                 StatusCode = HttpStatusCode.Created,
                 Succeeded = true,
                 Message = "Created",
+                Meta = meta
+            };
+        }
+        public Response<T> Updated<T>(object meta = null)
+        {
+            return new Response<T>()
+            {
+                StatusCode = HttpStatusCode.OK,
+                Succeeded = true,
+                Message = "Updated",
                 Meta = meta
             };
         }

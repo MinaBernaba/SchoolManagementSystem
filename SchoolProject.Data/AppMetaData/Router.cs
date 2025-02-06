@@ -1,11 +1,4 @@
-﻿using SchoolProject.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SchoolProject.Data.AppMetaData
+﻿namespace SchoolProject.Data.AppMetaData
 {
     public static class Router
     {
@@ -17,7 +10,8 @@ namespace SchoolProject.Data.AppMetaData
             public const string Prefix = rule + "Student/";
             public const string GetAllStudents = Prefix + "GetAllStudents";
             public const string GetStudentById = Prefix + "GetStudentById/{id}";
-            public const string CreateStudent = Prefix + "Create";
+            public const string CreateStudent = Prefix + "CreateStudent";
+            public const string UpdateStudent = Prefix + "UpdateStudent";
         }
     }
 }

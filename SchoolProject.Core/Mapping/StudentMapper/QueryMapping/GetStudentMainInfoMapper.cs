@@ -9,7 +9,8 @@ namespace SchoolProject.Core.Mapping.StudentMapper
         public void GetAllStudentsMapper()
         {
             CreateMap<Student, GetStudentMainInfoResponse>()
-               .ForMember(dest => dest.DepartmentName, source => source.MapFrom(source => source.Department.Name));
+               .ForMember(dest => dest.DepartmentName, source => source.MapFrom(source => source.Department.Name))
+               .ReverseMap();
 
         }
     }
