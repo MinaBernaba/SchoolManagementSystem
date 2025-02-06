@@ -12,6 +12,7 @@
             public const string GetStudentById = Prefix + "GetStudentById/{id}";
             public const string CreateStudent = Prefix + "CreateStudent";
             public const string UpdateStudent = Prefix + "UpdateStudent";
+            public const string DeleteStudent = Prefix + "DeleteStudent/{id}";
         }
     }
 }

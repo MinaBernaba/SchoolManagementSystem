@@ -8,8 +8,9 @@ namespace SchoolProject.Service.Interfaces
         Task<Student> GetStudentByIdAsync(int id);
         Task AddAsync(Student student);
         Task<bool> IsStudentNameExistAsync(string name);
-        Task<bool> IsStudentIdExistAsync(int id);
+        Task<bool> IsStudentExistByIdAsync(int id);
         Task UpdateStudentAsync(Student student);
-        Task<bool> IsStudentNameExistExceptSelf(string name, int id);
+        Task<bool> IsStudentNameExistExceptSelfAsync(string name, int id);
+        Task<bool> DeleteStudentByIdAsync(int id);
     }
 }

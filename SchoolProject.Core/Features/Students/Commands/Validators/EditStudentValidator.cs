@@ -37,7 +37,7 @@ namespace SchoolProject.Core.Features.Students.Commands.Validators
         public void ApplyCustomRules()
         {
             RuleFor(x => x.Name)
-               .MustAsync(async (Model, Key, CancellationToken) => !await studentService.IsStudentNameExistExceptSelf(Key, Model.StudentId))
+               .MustAsync(async (Model, Key, CancellationToken) => !await studentService.IsStudentNameExistExceptSelfAsync(Key, Model.StudentId))
                .WithMessage(x => $"the name {x.Name} exists before!");
 
 

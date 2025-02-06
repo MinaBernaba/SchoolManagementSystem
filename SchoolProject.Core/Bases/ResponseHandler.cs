@@ -37,10 +37,11 @@ namespace SchoolProject.Core.Bases
                 Meta = meta
             };
         }
-        public Response<T> Deleted<T>()
+        public Response<T> Deleted<T>(object meta)
         {
             return new Response<T>()
             {
+                Meta = meta,
                 StatusCode = HttpStatusCode.OK,
                 Succeeded = true,
                 Message = "Deleted Successfully"
