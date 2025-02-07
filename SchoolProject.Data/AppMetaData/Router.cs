@@ -13,6 +13,7 @@
             public const string CreateStudent = Prefix + "CreateStudent";
             public const string UpdateStudent = Prefix + "UpdateStudent";
             public const string DeleteStudent = Prefix + "DeleteStudent/{id}";
+            public const string GetPageOfStudents = Prefix + "GetPageOfStudents/";
         }
     }
 }

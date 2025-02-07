@@ -22,6 +22,13 @@ namespace SchoolManagementSystem.api.Controllers
 
         #endregion
 
+        #region GetPageOfStudents
+
+        [HttpGet(Router.Student.GetPageOfStudents)]
+        public async Task<IActionResult> GetPageOfStudents([FromQuery] GetStudentsPaginatedQuery query) => Ok(await Mediator.Send(query));
+
+        #endregion
+
         #region Add Student 
 
         [HttpPost(Router.Student.CreateStudent)]

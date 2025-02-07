@@ -12,7 +12,7 @@ namespace SchoolProject.Core.Bases
                 Data = entity,
                 StatusCode = HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Added Successfully",
+                Message = "Done Successfully",
                 Meta = meta
             };
         }

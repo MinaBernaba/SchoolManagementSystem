@@ -31,5 +31,10 @@ namespace SchoolProject.Service.Services
                 return false;
             }
         }
+        public IQueryable<Student> GetAllStudentsIQueryable() => studentRepository.GetAllNoTracking();
+        public IQueryable<Student> GetAllStudentsWithDepartmentIQueryable() => studentRepository.GetAllNoTracking().Include(x => x.Department);
+        public IQueryable<Student> FilterStudentsIQueryable(string search) =>
+            GetAllStudentsWithDepartmentIQueryable().Where(x => x.Department.Name.Equals(search) || x.Name.Equals(search));
+
     }
 }
