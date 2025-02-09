@@ -16,11 +16,10 @@ namespace SchoolProject.Core.Bases
                 Meta = meta
             };
         }
-        public Response<T> Created<T>(T entity, object meta = null)
+        public Response<T> Created<T>(object meta = null)
         {
             return new Response<T>()
             {
-                Data = entity,
                 StatusCode = HttpStatusCode.Created,
                 Succeeded = true,
                 Message = "Created",

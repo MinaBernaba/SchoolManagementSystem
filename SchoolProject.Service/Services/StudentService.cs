@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolProject.Data.Entities;
+using SchoolProject.Data.Helpers;
 using SchoolProject.Infrastructure.Interfaces;
 using SchoolProject.Service.Interfaces;
 
@@ -33,8 +34,25 @@ namespace SchoolProject.Service.Services
         }
         public IQueryable<Student> GetAllStudentsIQueryable() => studentRepository.GetAllNoTracking();
         public IQueryable<Student> GetAllStudentsWithDepartmentIQueryable() => studentRepository.GetAllNoTracking().Include(x => x.Department);
-        public IQueryable<Student> FilterStudentsIQueryable(string search) =>
-            GetAllStudentsWithDepartmentIQueryable().Where(x => x.Department.Name.Equals(search) || x.Name.Equals(search));
+        public IQueryable<Student> FilterStudentsIQueryable(EnStudentOrdering orderBy, string search)
+        {
+            var query = GetAllStudentsWithDepartmentIQueryable();
+            if (!string.IsNullOrEmpty(search))
+                query = query.Where(x => x.Name.Equals(search) || x.Address.Equals(search));
+
+            switch (orderBy)
+            {
+                case EnStudentOrdering.Name:
+                    return query.OrderBy(x => x.Name);
+                case EnStudentOrdering.Address:
+                    return query.OrderBy(x => x.Address);
+                case EnStudentOrdering.StudentId:
+                    return query.OrderBy(x => x.StudentId);
+                case EnStudentOrdering.DepartmentName:
+                    return query.OrderBy(x => x.Department.Name);
+                default: return query;
+            }
+        }
 
     }
 }

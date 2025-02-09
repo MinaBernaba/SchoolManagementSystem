@@ -1,4 +1,5 @@
 ﻿using SchoolProject.Data.Entities;
+using SchoolProject.Data.Helpers;
 
 namespace SchoolProject.Service.Interfaces
 {
@@ -6,7 +7,7 @@ namespace SchoolProject.Service.Interfaces
     {
         IQueryable<Student> GetAllStudentsIQueryable();
         IQueryable<Student> GetAllStudentsWithDepartmentIQueryable();
-        IQueryable<Student> FilterStudentsIQueryable(string search);
+        IQueryable<Student> FilterStudentsIQueryable(EnStudentOrdering orderBy, string search);
         Task<List<Student>> GetAllStudentsAsync();
         Task<Student> GetStudentByIdAsync(int id);
         Task AddAsync(Student student);

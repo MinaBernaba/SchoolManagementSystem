@@ -21,7 +21,7 @@ namespace SchoolProject.Core.Features.Students.Queries.Handlers
         {
             var allStudents = await studentService.GetAllStudentsAsync();
             var studentsMapper = mapper.Map<List<GetStudentMainInfoResponse>>(allStudents);
-            return Success(studentsMapper);
+            return Success(studentsMapper, $"Number of students is: {studentsMapper.Count}");
         }
         #endregion
 
@@ -44,15 +44,7 @@ namespace SchoolProject.Core.Features.Students.Queries.Handlers
                 StudentId = student.StudentId,
                 DepartmentName = student.Department.Name
             };
-
-            if (request.Search != null)
-                return await studentService.FilterStudentsIQueryable(request.Search)
-                    .Select(expression)
-                    .ToPaginatedListAsync(request.PageNumber, request.PageSize);
-
-            return await studentService.GetAllStudentsIQueryable()
-                .Select(expression)
-                .ToPaginatedListAsync(request.PageNumber, request.PageSize);
+            return await studentService.FilterStudentsIQueryable(request.OrderBy, request.Search).Select(expression).ToPaginatedListAsync(request.PageNumber, request.PageSize);
         }
         #endregion
 

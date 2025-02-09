@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SchoolProject.Data.Entities
 {
@@ -13,9 +8,10 @@ namespace SchoolProject.Data.Entities
 
         [MaxLength(50)]
         public string Name { get; set; }
-        public DateTime Period { get; set; }
-        public virtual ICollection<DepartmentSubject> DepartmentSubjects { get; set; } 
+        public int? Period { get; set; }
+        public virtual ICollection<DepartmentSubject> DepartmentSubjects { get; set; }
         public virtual ICollection<StudentSubject> StudentSubjects { get; set; }
+        public virtual ICollection<InstructorSubject> InstructorSubjects { get; set; }
 
     }
 }
