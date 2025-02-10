@@ -44,7 +44,8 @@ namespace SchoolProject.Core.Features.Students.Queries.Handlers
                 StudentId = student.StudentId,
                 DepartmentName = student.Department.Name
             };
-            return await studentService.FilterStudentsIQueryable(request.OrderBy, request.Search).Select(expression).ToPaginatedListAsync(request.PageNumber, request.PageSize);
+            var response = await studentService.FilterStudentsIQueryable(request.OrderBy, request.Search).Select(expression).ToPaginatedListAsync(request.PageNumber, request.PageSize);
+            return response;
         }
         #endregion
 

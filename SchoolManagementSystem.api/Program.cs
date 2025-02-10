@@ -28,6 +28,21 @@ builder.Services.AddInfrastructureDependencies()
                 .AddCoreDependencies();
 #endregion
 
+#region Allow CORS
+var CORS = "cors";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: CORS,
+                      policy =>
+                      {
+                          policy.AllowAnyHeader();
+                          policy.AllowAnyMethod();
+                          policy.AllowAnyOrigin();
+                      });
+});
+
+#endregion
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,7 +54,10 @@ if (app.Environment.IsDevelopment())
 }
 #endregion
 
+app.UseCors(CORS);
 app.UseMiddleware<ErrorHandlerMiddleware>();
+
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 

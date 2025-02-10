@@ -32,25 +32,21 @@ namespace SchoolProject.Core.MiddleWare
                 switch (error)
                 {
                     case UnauthorizedAccessException e:
-                        // custom application error
                         responseModel.StatusCode = HttpStatusCode.Unauthorized;
                         response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         break;
 
                     case ValidationException e:
-                        // custom validation error
                         responseModel.StatusCode = HttpStatusCode.UnprocessableEntity;
                         response.StatusCode = (int)HttpStatusCode.UnprocessableEntity;
                         break;
 
                     case KeyNotFoundException e:
-                        // not found error
                         responseModel.StatusCode = HttpStatusCode.NotFound;
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
 
                     case DbUpdateException e:
-                        // can't update error
                         responseModel.Message = e.Message;
                         responseModel.StatusCode = HttpStatusCode.BadRequest;
                         response.StatusCode = (int)HttpStatusCode.BadRequest;

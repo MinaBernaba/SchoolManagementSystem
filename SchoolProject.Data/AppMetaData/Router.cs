@@ -15,5 +15,11 @@
             public const string DeleteStudent = Prefix + "DeleteStudent/{id}";
             public const string GetPageOfStudents = Prefix + "GetPageOfStudents/";
         }
+
+        public static class Department
+        {
+            public const string Prefix = rule + "Department/";
+            public const string GetDepartmentById = Prefix + "GetDepartmentById/";
+        }
     }
 }

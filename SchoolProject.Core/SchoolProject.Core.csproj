@@ -17,4 +17,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CQRS\Departments\Commands\Models\" />
+    <Folder Include="CQRS\Departments\Commands\Handler\" />
+    <Folder Include="CQRS\Departments\Commands\Validators\" />
+    <Folder Include="Mapping\DepartmentMapper\CommandMapping\" />
+  </ItemGroup>
+
 </Project>

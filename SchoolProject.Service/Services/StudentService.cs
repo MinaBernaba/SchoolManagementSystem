@@ -54,5 +54,6 @@ namespace SchoolProject.Service.Services
             }
         }
 
+        public IQueryable<Student> GetAllStudentsOfCertainDepartmentIQueryable(int departmentID) => studentRepository.GetAllNoTracking().Where(x => x.DepartmentId.Equals(departmentID));
     }
 }

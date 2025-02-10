@@ -6,6 +6,7 @@ namespace SchoolProject.Service.Interfaces
     public interface IStudentService
     {
         IQueryable<Student> GetAllStudentsIQueryable();
+        IQueryable<Student> GetAllStudentsOfCertainDepartmentIQueryable(int departmentID);
         IQueryable<Student> GetAllStudentsWithDepartmentIQueryable();
         IQueryable<Student> FilterStudentsIQueryable(EnStudentOrdering orderBy, string search);
         Task<List<Student>> GetAllStudentsAsync();
