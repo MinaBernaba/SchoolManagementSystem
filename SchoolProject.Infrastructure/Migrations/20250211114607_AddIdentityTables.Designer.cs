@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolProject.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using SchoolProject.Infrastructure.Data;
 namespace SchoolProject.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250211114607_AddIdentityTables")]
+    partial class AddIdentityTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,7 +180,7 @@ namespace SchoolProject.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[InstructorManagerId] IS NOT NULL");
 
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("SchoolProject.Data.Entities.DepartmentSubject", b =>
@@ -200,7 +203,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("DepartmentSubjects", (string)null);
+                    b.ToTable("DepartmentSubjects");
                 });
 
             modelBuilder.Entity("SchoolProject.Data.Entities.Identity.User", b =>
@@ -313,7 +316,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     b.HasIndex("SupervisorId");
 
-                    b.ToTable("Instructors", (string)null);
+                    b.ToTable("Instructors");
                 });
 
             modelBuilder.Entity("SchoolProject.Data.Entities.InstructorSubject", b =>
@@ -336,7 +339,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     b.HasIndex("instructorId");
 
-                    b.ToTable("InstructorSubjects", (string)null);
+                    b.ToTable("InstructorSubjects");
                 });
 
             modelBuilder.Entity("SchoolProject.Data.Entities.Student", b =>
@@ -367,7 +370,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("SchoolProject.Data.Entities.StudentSubject", b =>
@@ -393,7 +396,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("StudentSubjects", (string)null);
+                    b.ToTable("StudentSubjects");
                 });
 
             modelBuilder.Entity("SchoolProject.Data.Entities.Subject", b =>
@@ -414,7 +417,7 @@ namespace SchoolProject.Infrastructure.Migrations
 
                     b.HasKey("SubjectId");
 
-                    b.ToTable("Subjects", (string)null);
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

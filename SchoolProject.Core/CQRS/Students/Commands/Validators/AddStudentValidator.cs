@@ -7,12 +7,14 @@ namespace SchoolProject.Core.Features.Students.Commands.Validators
     public class AddStudentValidator : AbstractValidator<AddStudentCommand>
     {
         private readonly IStudentService studentService;
+        private readonly IDepartmentService departmentService;
 
-        public AddStudentValidator(IStudentService studentService)
+        public AddStudentValidator(IStudentService studentService, IDepartmentService departmentService)
         {
             ApplyValidationRules();
             ApplyCustomValidationRules();
             this.studentService = studentService;
+            this.departmentService = departmentService;
         }
 
         public void ApplyValidationRules()
@@ -30,7 +32,10 @@ namespace SchoolProject.Core.Features.Students.Commands.Validators
         {
             RuleFor(x => x.Name)
                .MustAsync(async (Key, CancellationToken) => !await studentService.IsStudentNameExistAsync(Key))
-               .WithMessage(x => $"the name {x.Name} exists before!");
+               .WithMessage(x => $"The name {x.Name} exists before!");
+            RuleFor(x => x.DepartmentId)
+                .MustAsync(async (Key, CancellationToken) => await departmentService.IsDepartmentExistByIdAsync(Key))
+                .WithMessage(x => $"The departmetn ID: {x.DepartmentId} doesn't exist!");
 
         }
     }
