@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.DbTables;
 using SchoolProject.Data.Entities.Identity;
 
 namespace SchoolProject.Infrastructure.Data

@@ -2,7 +2,7 @@
 using MediatR;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Students.Commands.Models;
-using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.DbTables;
 using SchoolProject.Service.Interfaces;
 
 namespace SchoolProject.Core.Features.Students.Commands.Handlers

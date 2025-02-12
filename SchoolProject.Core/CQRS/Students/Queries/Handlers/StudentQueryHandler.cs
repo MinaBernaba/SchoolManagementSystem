@@ -4,7 +4,7 @@ using SchoolProject.Core.Bases;
 using SchoolProject.Core.Features.Students.Queries.Models;
 using SchoolProject.Core.Features.Students.Queries.Responses;
 using SchoolProject.Core.Wrappers;
-using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.DbTables;
 using SchoolProject.Service.Interfaces;
 using System.Linq.Expressions;
 

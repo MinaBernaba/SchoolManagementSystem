@@ -1,5 +1,5 @@
 ﻿using SchoolProject.Core.CQRS.Departments.Queries.Responses;
-using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.DbTables;
 
 namespace SchoolProject.Core.Mapping.DepartmentMapper
 {

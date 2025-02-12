@@ -1,5 +1,5 @@
 ﻿using SchoolProject.Core.Features.Students.Commands.Models;
-using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.DbTables;
 
 namespace SchoolProject.Core.Mapping.StudentMapper
 {

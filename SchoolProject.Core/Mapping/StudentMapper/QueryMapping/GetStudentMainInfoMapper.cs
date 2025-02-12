@@ -1,6 +1,6 @@
 ﻿
 using SchoolProject.Core.Features.Students.Queries.Responses;
-using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.DbTables;
 
 namespace SchoolProject.Core.Mapping.StudentMapper
 {

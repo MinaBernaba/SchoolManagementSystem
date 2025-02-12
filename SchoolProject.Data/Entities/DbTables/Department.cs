@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SchoolProject.Data.Entities
+namespace SchoolProject.Data.Entities.DbTables
 {
     public class Department
     {

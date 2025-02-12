@@ -1,4 +1,4 @@
-﻿using SchoolProject.Data.Entities;
+﻿using SchoolProject.Data.Entities.DbTables;
 using SchoolProject.Data.Helpers;
 
 namespace SchoolProject.Service.Interfaces

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SchoolProject.Data.Entities;
+using SchoolProject.Data.Entities.DbTables;
 using SchoolProject.Infrastructure.Interfaces;
 using SchoolProject.Service.Interfaces;
 

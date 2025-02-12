@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SchoolProject.Data.Entities
+namespace SchoolProject.Data.Entities.DbTables
 {
     public class Student
     {

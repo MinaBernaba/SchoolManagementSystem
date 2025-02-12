@@ -1,4 +1,4 @@
-﻿using SchoolProject.Data.Entities;
+﻿using SchoolProject.Data.Entities.DbTables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
