@@ -21,10 +21,7 @@
     <Folder Include="CQRS\Departments\Commands\Models\" />
     <Folder Include="CQRS\Departments\Commands\Handler\" />
     <Folder Include="CQRS\Departments\Commands\Validators\" />
-    <Folder Include="CQRS\Users\Queries\Handler\" />
-    <Folder Include="CQRS\Users\Queries\Models\" />
     <Folder Include="Mapping\DepartmentMapper\CommandMapping\" />
-    <Folder Include="Mapping\UserMapper\QueryMapping\" />
   </ItemGroup>
 
 </Project>

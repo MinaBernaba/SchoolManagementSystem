@@ -25,6 +25,8 @@
         {
             public const string Prefix = rule + "User/";
             public const string AddNewUser = Prefix + "AddNewUser/";
+            public const string GetAllUsersPaginated = Prefix + "GetAllUsersPaginated/";
+            public const string GetUserById = Prefix + "GetUserById/{id}";
         }
     }
 }

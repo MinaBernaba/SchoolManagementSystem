@@ -7,6 +7,7 @@ namespace SchoolProject.Core.Mapping.UserMapper
         public UserProfile()
         {
             AddUserMapper();
+            UserInfoMapper();
         }
     }
 }
