@@ -32,6 +32,10 @@ namespace SchoolManagementSystem.api.Controllers
         public async Task<IActionResult> UpdateUser(UpdateUserCommand updateUser) => NewResult(await Mediator.Send(updateUser));
         #endregion
 
+        #region Delete User 
+        [HttpDelete(Router.User.DeleteUser)]
+        public async Task<IActionResult> DeleteUser(int id) => NewResult(await Mediator.Send(new DeleteUserCommand() { Id = id }));
+        #endregion
 
     }
 }

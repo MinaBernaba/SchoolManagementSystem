@@ -9,7 +9,8 @@ namespace SchoolProject.Core.CQRS.Users.Commands.Handler
 {
     public class UserCommandHandler(UserManager<User> userManager, IMapper mapper) : ResponseHandler,
         IRequestHandler<AddUserCommand, Response<string>>,
-        IRequestHandler<UpdateUserCommand, Response<string>>
+        IRequestHandler<UpdateUserCommand, Response<string>>,
+        IRequestHandler<DeleteUserCommand, Response<string>>
     {
         #region Handle Add new user
         public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
@@ -45,14 +46,33 @@ namespace SchoolProject.Core.CQRS.Users.Commands.Handler
 
             var userMapper = mapper.Map(request, user);
 
-            var createResult = await userManager.UpdateAsync(userMapper);
-            if (!createResult.Succeeded)
+            var updateResult = await userManager.UpdateAsync(userMapper);
+            if (!updateResult.Succeeded)
             {
-                var errors = string.Join(Environment.NewLine, createResult.Errors.Select(e => e.Description));
+                var errors = string.Join(Environment.NewLine, updateResult.Errors.Select(e => e.Description));
                 return BadRequest<string>($"Failed to update user!{Environment.NewLine} Errors: {errors}");
             }
-            return Updated<string>($"User  with ID: {userMapper.Id} Updated successfully");
+            return Updated<string>($"User  with ID: {userMapper.Id} Updated successfully!");
         }
         #endregion
+
+        #region Handle delete user
+        public async Task<Response<string>> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
+        {
+            var user = await userManager.FindByIdAsync(request.Id.ToString());
+            if (user == null)
+                return NotFound<string>($"No user with ID: {request.Id} exist!");
+
+            var deleteResult = await userManager.DeleteAsync(user);
+
+            if (!deleteResult.Succeeded)
+            {
+                var errors = string.Join(Environment.NewLine, deleteResult.Errors.Select(e => e.Description));
+                return BadRequest<string>($"Failed to Delete user!{Environment.NewLine} Errors: {errors}");
+            }
+            return Deleted<string>($"User  with ID: {user.Id} deleted successfully!");
+        }
+        #endregion
+
     }
 }
