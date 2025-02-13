@@ -6,7 +6,7 @@ using SchoolProject.Service.Interfaces;
 
 namespace SchoolProject.Service.Services
 {
-    internal class StudentService(IStudentRepository studentRepository) : IStudentService
+    public class StudentService(IStudentRepository studentRepository) : IStudentService
     {
         public async Task<List<Student>> GetAllStudentsAsync() => await studentRepository.GetAllStudentsAsync();
         public async Task<Student> GetStudentByIdAsync(int id) =>

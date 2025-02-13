@@ -8,8 +8,10 @@ using SchoolProject.Data.Entities.Identity;
 namespace SchoolProject.Core.CQRS.Users.Commands.Handler
 {
     public class UserCommandHandler(UserManager<User> userManager, IMapper mapper) : ResponseHandler,
-        IRequestHandler<AddUserCommand, Response<string>>
+        IRequestHandler<AddUserCommand, Response<string>>,
+        IRequestHandler<UpdateUserCommand, Response<string>>
     {
+        #region Handle Add new user
         public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
             var existingUserEmail = await userManager.FindByEmailAsync(request.Email);
@@ -31,5 +33,26 @@ namespace SchoolProject.Core.CQRS.Users.Commands.Handler
             }
             return Created<string>($"User added successfully with ID: {identityUser.Id}");
         }
+        #endregion
+
+        #region Handle Update user
+        public async Task<Response<string>> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        {
+            var user = await userManager.FindByIdAsync(request.Id.ToString());
+
+            if (user == null)
+                return NotFound<string>($"No user with ID: {request.Id} exist!");
+
+            var userMapper = mapper.Map(request, user);
+
+            var createResult = await userManager.UpdateAsync(userMapper);
+            if (!createResult.Succeeded)
+            {
+                var errors = string.Join(Environment.NewLine, createResult.Errors.Select(e => e.Description));
+                return BadRequest<string>($"Failed to update user!{Environment.NewLine} Errors: {errors}");
+            }
+            return Updated<string>($"User  with ID: {userMapper.Id} Updated successfully");
+        }
+        #endregion
     }
 }

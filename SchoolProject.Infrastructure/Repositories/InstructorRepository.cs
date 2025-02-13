@@ -4,7 +4,7 @@ using SchoolProject.Infrastructure.Interfaces;
 
 namespace SchoolProject.Infrastructure.Repositories
 {
-    internal class InstructorRepository : GenericRepositoryAsync<Instructor>, IInstructorRepository
+    public class InstructorRepository : GenericRepositoryAsync<Instructor>, IInstructorRepository
     {
         public InstructorRepository(ApplicationDbContext context) : base(context)
         {

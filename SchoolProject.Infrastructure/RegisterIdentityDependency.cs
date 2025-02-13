@@ -12,7 +12,7 @@ namespace SchoolProject.Infrastructure
             services.AddIdentity<User, IdentityRole<int>>(options =>
             {
                 // Password settings
-                options.Password.RequireDigit = true;
+                options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;

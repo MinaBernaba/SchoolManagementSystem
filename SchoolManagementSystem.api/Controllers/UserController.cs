@@ -27,6 +27,11 @@ namespace SchoolManagementSystem.api.Controllers
         public async Task<IActionResult> AddNewUser(AddUserCommand addUserCommand) => NewResult(await Mediator.Send(addUserCommand));
         #endregion
 
+        #region Update User 
+        [HttpPut(Router.User.UpdateUser)]
+        public async Task<IActionResult> UpdateUser(UpdateUserCommand updateUser) => NewResult(await Mediator.Send(updateUser));
+        #endregion
+
 
     }
 }
