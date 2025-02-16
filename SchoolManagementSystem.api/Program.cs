@@ -1,8 +1,12 @@
 #region usings
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using SchoolProject.Core;
 using SchoolProject.Core.MiddleWare;
+using SchoolProject.Data;
 using SchoolProject.Infrastructure;
 using SchoolProject.Service;
+using System.Text;
 #endregion
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,7 +22,32 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructureDependencies(builder.Configuration)
                 .AddServiceDependencies()
                 .AddCoreDependencies()
-                .AddIdentityDependency();
+                .AddIdentityDependency()
+                .AddDataDependencies(builder.Configuration);
+#endregion
+
+#region Validate JWT Token
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
+    {
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["JWT:Issuer"],
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["JWT:Audience"],
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]!))
+        };
+
+    });
+
 #endregion
 
 #region Allow CORS
@@ -50,7 +79,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors(CORS);
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
-
 
 app.UseHttpsRedirection();
 

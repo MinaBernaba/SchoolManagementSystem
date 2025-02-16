@@ -1,0 +1,30 @@
+﻿using FluentValidation;
+using SchoolProject.Core.CQRS.Authentication.Commands.Models;
+
+namespace SchoolProject.Core.CQRS.Authentication.Commands.Validators
+{
+    public class SignInValidator : AbstractValidator<SignInCommand>
+    {
+        public SignInValidator()
+        {
+            ApplyValidationRules();
+            ApplyCustomValidationRules();
+        }
+
+        public void ApplyValidationRules()
+        {
+            RuleFor(X => X.UserName)
+                .NotNull().WithMessage("Username can't be null!")
+                .NotEmpty().WithMessage("Username can't be empty!");
+
+            RuleFor(X => X.Password)
+                .NotNull().WithMessage("Password can't be null!")
+                .NotEmpty().WithMessage("Password can't be empty!");
+
+        }
+        public void ApplyCustomValidationRules()
+        {
+
+        }
+    }
+}

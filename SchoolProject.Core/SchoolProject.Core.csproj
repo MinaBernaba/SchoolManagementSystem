@@ -14,10 +14,10 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="CQRS\Authentication\Queries\" />
     <Folder Include="CQRS\Departments\Commands\Models\" />
     <Folder Include="CQRS\Departments\Commands\Handler\" />
     <Folder Include="CQRS\Departments\Commands\Validators\" />
