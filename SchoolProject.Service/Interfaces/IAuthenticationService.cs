@@ -4,6 +4,6 @@ namespace SchoolProject.Service.Interfaces
 {
     public interface IAuthenticationService
     {
-        string GetJWTToken(User user);
+        (string Token, DateTime ExpiresOn) GetJWTToken(User user);
     }
 }

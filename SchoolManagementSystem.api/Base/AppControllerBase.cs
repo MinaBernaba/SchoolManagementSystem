@@ -35,5 +35,7 @@ namespace SchoolManagementSystem.api.Base
             }
         }
         #endregion
+
+
     }
 }

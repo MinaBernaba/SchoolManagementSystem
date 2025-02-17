@@ -11,29 +11,33 @@ namespace SchoolProject.Service.Services
 {
     public class AuthenticationService(IOptionsMonitor<JWTOptions> jwtOptions) : IAuthenticationService
     {
-        public string GetJWTToken(User user)
+        public (string Token, DateTime ExpiresOn) GetJWTToken(User user)
         {
-            List<Claim> cliams = new List<Claim>
+            var expirationDate = DateTime.Now.AddMinutes(jwtOptions.CurrentValue.LifeTime);
+
+            List<Claim> claims = new List<Claim>
             {
+                new Claim(JwtRegisteredClaimNames.Jti , Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier , user.Id.ToString()),
                 new Claim(ClaimTypes.Name , user.FullName),
                 new Claim("Username" ,  user.UserName),
-                new Claim("Email" , user.Email)
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
             };
             var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenDescribtor = new SecurityTokenDescriptor()
+            var tokenDescriptor = new SecurityTokenDescriptor()
             {
                 Issuer = jwtOptions.CurrentValue.Issuer,
                 Audience = jwtOptions.CurrentValue.Audience,
-                Subject = new ClaimsIdentity(cliams),
-                Expires = DateTime.Now.AddMinutes(jwtOptions.CurrentValue.LifeTime),
+                Subject = new ClaimsIdentity(claims),
+                Expires = expirationDate,
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.CurrentValue.SigningKey)), SecurityAlgorithms.HmacSha256)
             };
 
-            var securityToken = tokenHandler.CreateToken(tokenDescribtor);
+            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
             var accessToken = tokenHandler.WriteToken(securityToken);
-            return accessToken;
+
+            return (accessToken, expirationDate);
         }
     }
 }

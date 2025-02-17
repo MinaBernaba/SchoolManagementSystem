@@ -3,37 +3,40 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.CQRS.Users.Commands.Models;
+using SchoolProject.Core.CQRS.Users.Commands.Responses;
 using SchoolProject.Data.Entities.Identity;
+using SchoolProject.Service.Interfaces;
 
 namespace SchoolProject.Core.CQRS.Users.Commands.Handler
 {
-    public class UserCommandHandler(UserManager<User> userManager, IMapper mapper) : ResponseHandler,
-        IRequestHandler<AddUserCommand, Response<string>>,
+    public class UserCommandHandler(UserManager<User> userManager, IMapper mapper, IAuthenticationService authenticationService) : ResponseHandler,
+        IRequestHandler<AddUserCommand, Response<AuthResponse>>,
         IRequestHandler<UpdateUserCommand, Response<string>>,
         IRequestHandler<DeleteUserCommand, Response<string>>,
         IRequestHandler<ChangePasswordCommand, Response<string>>
     {
         #region Handle Add new user
-        public async Task<Response<string>> Handle(AddUserCommand request, CancellationToken cancellationToken)
+        public async Task<Response<AuthResponse>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
-            //var existingUserEmail = await userManager.FindByEmailAsync(request.Email);
-            //if (existingUserEmail != null)
-            //    return BadRequest<string>("Email already exists for another user!");
-
-
-            //var existingUserName = await userManager.FindByNameAsync(request.UserName);
-            //if (existingUserName != null)
-            //    return BadRequest<string>("Username already exists for another user!");
-
-            var identityUser = mapper.Map<User>(request);
-            var createResult = await userManager.CreateAsync(identityUser, request.Password);
+            var user = mapper.Map<User>(request);
+            var createResult = await userManager.CreateAsync(user, request.Password);
 
             if (!createResult.Succeeded)
             {
                 var errors = string.Join("\n", createResult.Errors.Select(e => e.Description));
-                return BadRequest<string>($"Failed to add user!\n Errors: {errors}");
+                return BadRequest<AuthResponse>(errors);
             }
-            return Created<string>($"User added successfully with ID: {identityUser.Id}");
+
+            (string token, DateTime expiresOn) = authenticationService.GetJWTToken(user);
+
+            var successAuthResponse = new AuthResponse()
+            {
+                Email = user.Email,
+                Token = token,
+                UserName = user.UserName,
+                ExpiresOn = expiresOn
+            };
+            return Success(successAuthResponse, message: $"User with username: {user.UserName} registered successfully.");
         }
         #endregion
 

@@ -5,14 +5,14 @@ namespace SchoolProject.Core.Bases
     public class ResponseHandler
     {
         public ResponseHandler() { }
-        public Response<T> Success<T>(T entity, object meta = null)
+        public Response<T> Success<T>(T entity, object meta = null, string message = null)
         {
             return new Response<T>()
             {
                 Data = entity,
                 StatusCode = HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Done Successfully",
+                Message = message == null ? "Bad Request" : message,
                 Meta = meta
             };
         }
@@ -46,13 +46,13 @@ namespace SchoolProject.Core.Bases
                 Message = "Deleted Successfully"
             };
         }
-        public Response<T> UnAuthorized<T>()
+        public Response<T> UnAuthorized<T>(string message = null)
         {
             return new Response<T>()
             {
                 StatusCode = HttpStatusCode.Unauthorized,
                 Succeeded = false,
-                Message = "UnAuthorized"
+                Message = message == null ? "Bad Request" : message
             };
         }
         public Response<T> BadRequest<T>(string message = null)

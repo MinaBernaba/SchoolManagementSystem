@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using SchoolProject.Core.Bases;
+using SchoolProject.Core.CQRS.Users.Commands.Responses;
 
 namespace SchoolProject.Core.CQRS.Users.Commands.Models
 {
-    public class AddUserCommand : IRequest<Response<string>>
+    public class AddUserCommand : IRequest<Response<AuthResponse>>
     {
         public string FullName { get; set; }
         public string UserName { get; set; }
