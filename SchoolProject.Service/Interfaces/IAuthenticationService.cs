@@ -4,6 +4,8 @@ namespace SchoolProject.Service.Interfaces
 {
     public interface IAuthenticationService
     {
-        (string Token, DateTime ExpiresOn) GetJWTToken(User user);
+        Task<JWTAuthResponse> LoginAsync(User user);
+        Task<JWTAuthResponse?> RenewRefreshTokenAsync(string refreshToken);
+        Task<bool> RevokeRefreshTokenAsync(string refreshToken);
     }
 }

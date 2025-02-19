@@ -6,6 +6,7 @@
         public string Audience { get; set; }
         public int LifeTime { get; set; }
         public string SigningKey { get; set; }
+        public int RefreshTokenLifeTime { get; set; }
 
     }
 }

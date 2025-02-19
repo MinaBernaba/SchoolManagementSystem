@@ -12,7 +12,7 @@ namespace SchoolProject.Core.Bases
                 Data = entity,
                 StatusCode = HttpStatusCode.OK,
                 Succeeded = true,
-                Message = message == null ? "Bad Request" : message,
+                Message = message == null ? "Done successfully" : message,
                 Meta = meta
             };
         }
@@ -22,7 +22,7 @@ namespace SchoolProject.Core.Bases
             {
                 StatusCode = HttpStatusCode.Created,
                 Succeeded = true,
-                Message = "Created",
+                Message = "Created successfully",
                 Meta = meta
             };
         }
@@ -32,7 +32,7 @@ namespace SchoolProject.Core.Bases
             {
                 StatusCode = HttpStatusCode.OK,
                 Succeeded = true,
-                Message = "Updated",
+                Message = "Updated successfully",
                 Meta = meta
             };
         }
@@ -52,7 +52,7 @@ namespace SchoolProject.Core.Bases
             {
                 StatusCode = HttpStatusCode.Unauthorized,
                 Succeeded = false,
-                Message = message == null ? "Bad Request" : message
+                Message = message == null ? "Un authorized" : message
             };
         }
         public Response<T> BadRequest<T>(string message = null)
@@ -70,7 +70,7 @@ namespace SchoolProject.Core.Bases
             {
                 StatusCode = HttpStatusCode.UnprocessableEntity,
                 Succeeded = false,
-                Message = message == null ? "Unprocessabl eEntity" : message
+                Message = message == null ? "Unprocessable entity" : message
             };
         }
         public Response<T> NotFound<T>(string message = null)

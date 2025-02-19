@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CQRS\Authentication\Queries\" />
     <Folder Include="CQRS\Departments\Commands\Models\" />
     <Folder Include="CQRS\Departments\Commands\Handler\" />
     <Folder Include="CQRS\Departments\Commands\Validators\" />

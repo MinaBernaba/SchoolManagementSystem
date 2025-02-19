@@ -1,42 +1,37 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.CQRS.Authentication.Commands.Models;
-using SchoolProject.Core.CQRS.Authentication.Commands.Responces;
 using SchoolProject.Data.Entities.Identity;
 using SchoolProject.Service.Interfaces;
 
 namespace SchoolProject.Core.CQRS.Authentication.Commands.Handler
 {
     public class AuthCommandHandler(UserManager<User> userManager, IAuthenticationService authenticationService) : ResponseHandler,
-        IRequestHandler<SignInCommand, Response<AuthResponse>>
+        IRequestHandler<SignInCommand, Response<JWTAuthResponse>>,
+        IRequestHandler<RevokeRefreshTokenCommand, Response<string>>
     {
-        public async Task<Response<AuthResponse>> Handle(SignInCommand request, CancellationToken cancellationToken)
+        public async Task<Response<JWTAuthResponse>> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
-            var user = await userManager.FindByNameAsync(request.UserName);
 
-            //either the following method or the next one after it, both are correct
+            var user = await userManager.Users.Include(x => x.RefreshTokens.Where(x => x.ExpiresOn >= DateTime.UtcNow && x.RevokedOn == null)).FirstOrDefaultAsync(u => u.UserName == request.UserName);
 
             if (user == null || !await userManager.CheckPasswordAsync(user, request.Password))
-                return BadRequest<AuthResponse>("Invalid username or password.");
+                return BadRequest<JWTAuthResponse>("Invalid username or password.");
 
+            var jwtAuthResponse = await authenticationService.LoginAsync(user);
 
-            //var signInResult = await signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+            return Success(jwtAuthResponse, message: $"User with username: {user.UserName} logged in successfully.");
+        }
 
-            //if (!signInResult.Succeeded)
-            //    return BadRequest<AuthResponse>("Invalid username or password.");
+        public async Task<Response<string>> Handle(RevokeRefreshTokenCommand request, CancellationToken cancellationToken)
+        {
+            if (await authenticationService.RevokeRefreshTokenAsync(request.RefreshToken))
+                return Success("Refresh token revoked successfully.");
 
-
-            (string token, DateTime expiresOn) = authenticationService.GetJWTToken(user);
-
-            var successAuthResponse = new AuthResponse()
-            {
-                Email = user.Email,
-                Token = token,
-                UserName = user.UserName,
-                ExpiresOn = expiresOn
-            };
-            return Success(successAuthResponse, message: $"User with username: {user.UserName} logged in successfully.");
+            else
+                return BadRequest<string>("Refresh token is invalid, No revoke!");
         }
     }
 }

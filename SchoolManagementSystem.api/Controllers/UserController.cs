@@ -23,8 +23,22 @@ namespace SchoolManagementSystem.api.Controllers
         #endregion
 
         #region Resigter New User 
-        [HttpPost(Router.User.AddNewUser)]
-        public async Task<IActionResult> AddNewUser(AddUserCommand addUserCommand) => NewResult(await Mediator.Send(addUserCommand));
+        [HttpPost(Router.User.Register)]
+        public async Task<IActionResult> AddNewUser(AddUserCommand addUserCommand)
+        {
+            var response = await Mediator.Send(addUserCommand);
+            if (response.Data != null)
+            {
+                var cookieOptions = new CookieOptions()
+                {
+                    HttpOnly = true,
+                    Expires = response.Data.RefreshTokenExpiration.ToLocalTime()
+                };
+
+                Response.Cookies.Append("RefreshToken", response.Data.RefreshToken, cookieOptions);
+            }
+            return Ok(response);
+        }
         #endregion
 
         #region Update User 

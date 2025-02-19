@@ -24,7 +24,7 @@
         public static class User
         {
             public const string Prefix = rule + "User/";
-            public const string AddNewUser = Prefix + "AddNewUser/";
+            public const string Register = Prefix + "Register/";
             public const string GetAllUsersPaginated = Prefix + "GetAllUsersPaginated/";
             public const string GetUserById = Prefix + "GetUserById/{id}";
             public const string UpdateUser = Prefix + "UpdateUser";
@@ -36,6 +36,8 @@
         {
             public const string Prefix = rule + "Authentication/";
             public const string SignIn = Prefix + "SignIn/";
+            public const string RenewRefreshToken = Prefix + "RenewRefreshToken/";
+            public const string RevokeRefreshToken = Prefix + "RevokeRefreshToken/";
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using SchoolProject.Core.Bases;
-using SchoolProject.Core.CQRS.Users.Commands.Responses;
+using SchoolProject.Data.Entities.Identity;
 
 namespace SchoolProject.Core.CQRS.Users.Commands.Models
 {
-    public class AddUserCommand : IRequest<Response<AuthResponse>>
+    public class AddUserCommand : IRequest<Response<JWTAuthResponse>>
     {
         public string FullName { get; set; }
         public string UserName { get; set; }

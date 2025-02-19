@@ -37,7 +37,7 @@ namespace SchoolProject.Service.Services
         public IQueryable<Student> FilterStudentsIQueryable(EnStudentOrdering orderBy, string search)
         {
             var query = GetAllStudentsWithDepartmentIQueryable();
-            if (!string.IsNullOrEmpty(search))
+            if (!string.IsNullOrWhiteSpace(search))
                 query = query.Where(x => x.Name.Equals(search) || x.Address.Equals(search));
 
             switch (orderBy)

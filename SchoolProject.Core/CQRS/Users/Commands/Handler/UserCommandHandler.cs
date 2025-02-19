@@ -3,40 +3,33 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using SchoolProject.Core.Bases;
 using SchoolProject.Core.CQRS.Users.Commands.Models;
-using SchoolProject.Core.CQRS.Users.Commands.Responses;
 using SchoolProject.Data.Entities.Identity;
 using SchoolProject.Service.Interfaces;
 
 namespace SchoolProject.Core.CQRS.Users.Commands.Handler
 {
     public class UserCommandHandler(UserManager<User> userManager, IMapper mapper, IAuthenticationService authenticationService) : ResponseHandler,
-        IRequestHandler<AddUserCommand, Response<AuthResponse>>,
+        IRequestHandler<AddUserCommand, Response<JWTAuthResponse>>,
         IRequestHandler<UpdateUserCommand, Response<string>>,
         IRequestHandler<DeleteUserCommand, Response<string>>,
         IRequestHandler<ChangePasswordCommand, Response<string>>
     {
         #region Handle Add new user
-        public async Task<Response<AuthResponse>> Handle(AddUserCommand request, CancellationToken cancellationToken)
+        public async Task<Response<JWTAuthResponse>> Handle(AddUserCommand request, CancellationToken cancellationToken)
         {
             var user = mapper.Map<User>(request);
+            user.RefreshTokens = user.RefreshTokens ?? new List<RefreshToken>();
+
             var createResult = await userManager.CreateAsync(user, request.Password);
 
             if (!createResult.Succeeded)
             {
                 var errors = string.Join("\n", createResult.Errors.Select(e => e.Description));
-                return BadRequest<AuthResponse>(errors);
+                return BadRequest<JWTAuthResponse>(errors);
             }
+            var jwtAuthResponse = await authenticationService.LoginAsync(user);
 
-            (string token, DateTime expiresOn) = authenticationService.GetJWTToken(user);
-
-            var successAuthResponse = new AuthResponse()
-            {
-                Email = user.Email,
-                Token = token,
-                UserName = user.UserName,
-                ExpiresOn = expiresOn
-            };
-            return Success(successAuthResponse, message: $"User with username: {user.UserName} registered successfully.");
+            return Success(jwtAuthResponse, message: $"User with username: {user.UserName} registered successfully.");
         }
         #endregion
 

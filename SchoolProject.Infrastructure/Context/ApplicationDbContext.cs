@@ -27,6 +27,7 @@ namespace SchoolProject.Infrastructure.Data
         public DbSet<InstructorSubject> InstructorSubjects { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<User> User { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         #endregion
 
     }
